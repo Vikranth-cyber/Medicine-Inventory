@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Medicine Inventory</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'inventory/styles.css' %}">
+</head>
+<body>
+    <h1>Medicine Inventory</h1>
+
+    <div style="text-align: center; margin-bottom: 10px;">
+        <input type="text" id="searchBar" placeholder="Search medicine..." onkeyup="filterMedicines()">
+    </div>
+
+    <table>
+        <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Stock</th>
+            <th>Expiry Date</th>
+            <th>Actions</th>
+        </tr>
+        {% for med in meds %}
+        <tr data-stock="{{ med.stock }}">
+            <td><img src="{{ med.img_url }}" alt="{{ med.name }}" class="med-img"></td>
+            <td class="med-name">{{ med.name }}</td>
+            <td>{{ med.stock }}</td>
+            <td>{{ med.expiry_date }}</td>
+            <td>
+                <a href="{% url 'edit_medicine' med.pk %}">Edit</a> | 
+                <a href="{% url 'delete_medicine' med.pk %}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div style="text-align: center;">
+        <a href="{% url 'add_medicine' %}" class="btn">Add Medicine</a>
+    </div>
+
+    <script src="{% static 'inventory/scripts.js' %}"></script>
+</body>
+</html>
